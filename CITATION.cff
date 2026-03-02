@@ -21,11 +21,9 @@ keywords:
 license: Apache-2.0
 version: 0.1.0
 date-released: "2026-03-01"
-preferred-citation:
-  type: conference-paper
-  title: "ekstra-csi: Full-Metadata Channel State Information Extraction for MediaTek mt76 WiFi Chipsets"
-  authors:
-    - family-names: "Rodriguez"
-      given-names: "Demetri"
-  year: 2026
-  collection-title: "In preparation"
+references:
+  - type: software
+    title: "MtkCSIdump"
+    authors:
+      - name: "MtkWifiRev"
+    repository-code: "https://github.com/MtkWifiRev/MtkCSIdump"

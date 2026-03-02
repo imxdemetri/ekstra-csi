@@ -34,7 +34,7 @@ information per measurement at minimal bandwidth cost.
 ## Requirements
 
 - OpenWrt router with mt76 CSI patches **compiled into the kernel module**
-  (tested on OpenWrt One with [mt76-csi-patches](https://github.com/MtkWifiRev/mt76-csi-patches))
+  (tested on OpenWrt One with patches from [MtkCSIdump](https://github.com/MtkWifiRev/MtkCSIdump))
 - Python 3.10+
 - Root access on the router (netlink requires it)
 
@@ -68,7 +68,7 @@ for frame in CSIClient("192.168.1.1"):
 from ekstra_csi import CSIClient
 from ekstra_csi.demux import DeviceDemux
 
-demux = DeviceDemux(targets=["aa:bb:cc:dd:ee:01", "aa:bb:cc:dd:ee:02"])
+demux = DeviceDemux(targets=["c8:3a:6b:14:e7:52", "9c:b6:d0:88:f1:03"])
 for frame in CSIClient("192.168.1.1"):
     demux.push(frame)
 ```
@@ -103,8 +103,8 @@ for frame in client:
 ## Hardware
 
 Tested on the [OpenWrt One](https://openwrt.org/toh/openwrt/one) (MT7981B SoC,
-mt7976 radio) running OpenWrt 24.10 with
-[mt76-csi-patches](https://github.com/MtkWifiRev/mt76-csi-patches).
+mt7976 radio) running OpenWrt 24.10 with CSI patches from
+[MtkCSIdump](https://github.com/MtkWifiRev/MtkCSIdump).
 Should work on any mt76 device with the CSI vendor extension: GL.iNet,
 Xiaomi, TP-Link Archer series, and other OpenWrt-supported routers.
 

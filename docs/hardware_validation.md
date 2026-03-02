@@ -35,15 +35,15 @@ Setting `CSI_CTRL_INTERVAL=1` also returned `err=0`.
 
 ### 3. CSI Record Capture
 
-Captured CSI frames from connected station `aa:bb:cc:dd:ee:01`:
+Captured CSI frames from connected station `c8:3a:6b:14:e7:52`:
 
 ```
-[0] MAC=aa:bb:cc:dd:ee:01 RSSI=-70 SNR=38 BW=2 rx=8 tx=0 chain=0x3118060 subs=256 nonzero=256
+[0] MAC=c8:3a:6b:14:e7:52 RSSI=-70 SNR=38 BW=2 rx=8 tx=0 chain=0x3118060 subs=256 nonzero=256
     I[0:8]   = [-109, -71, -27, 206, 359, 490, 562, 570]
     I[128:136]= [-3341, 5266, -1149, -31, 11, 22, 47, 62]
     Q[0:8]   = [-68, 544, 519, 501, 424, 320, 160, -1]
 
-[1] MAC=aa:bb:cc:dd:ee:01 RSSI=-70 SNR=38 BW=2 rx=8 tx=0 chain=0x3128060 subs=256 nonzero=256
+[1] MAC=c8:3a:6b:14:e7:52 RSSI=-70 SNR=38 BW=2 rx=8 tx=0 chain=0x3128060 subs=256 nonzero=256
     I[0:8]   = [-109, -71, -27, 206, 359, 490, 562, 570]
     I[128:136]= [-3341, 5266, -1149, -31, 11, 22, 47, 62]
     Q[0:8]   = [-68, 544, 519, 501, 424, 320, 160, -1]
@@ -53,7 +53,7 @@ Captured CSI frames from connected station `aa:bb:cc:dd:ee:01`:
 
 | Field | Value | Notes |
 |-------|-------|-------|
-| Transmitter MAC | `aa:bb:cc:dd:ee:01` | Matches connected station -- per-frame MAC confirmed |
+| Transmitter MAC | `c8:3a:6b:14:e7:52` | Matches connected station -- per-frame MAC confirmed |
 | RSSI | -70 dBm | Consistent with `iw station dump` (-73 dBm avg signal) |
 | SNR | 38 dB | Consistent with noise floor -91 dBm from `iwinfo` |
 | Bandwidth | 2 (= BW80) | 80 MHz as configured (HE80 on ch36, center 5210 MHz) |
@@ -114,7 +114,7 @@ Minimal CPU and memory impact. 844 MB free during active capture.
 
 | Feature | Status | Evidence |
 |---------|--------|----------|
-| Per-frame MAC extraction | **Confirmed** | `aa:bb:cc:dd:ee:01` matches `iw station dump` |
+| Per-frame MAC extraction | **Confirmed** | `c8:3a:6b:14:e7:52` matches `iw station dump` |
 | Per-frame RSSI | **Confirmed** | -70 to -75 dBm range, consistent with station signal |
 | Per-frame SNR | **Confirmed** | 32-38 dB, consistent with noise floor |
 | BW80 (256 subcarriers) | **Confirmed** | 256 non-zero I/Q pairs per record |
