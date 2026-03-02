@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+title: "ekstra-csi: Full-Metadata CSI Extraction for MediaTek mt76 WiFi Chipsets"
+message: >-
+  If you use this software in academic work, please cite it using
+  the metadata from this file and the accompanying paper.
+type: software
+authors:
+  - family-names: "Rodriguez"
+    given-names: "Demetri"
+repository-code: "https://github.com/imxdemetri/ekstra-csi"
+url: "https://github.com/imxdemetri/ekstra-csi"
+keywords:
+  - wifi-sensing
+  - channel-state-information
+  - csi
+  - mediatek
+  - mt76
+  - 802.11bf
+  - openwrt
+  - indoor-sensing
+license: Apache-2.0
+version: 0.1.0
+date-released: "2026-03-01"
+preferred-citation:
+  type: conference-paper
+  title: "ekstra-csi: Full-Metadata Channel State Information Extraction for MediaTek mt76 WiFi Chipsets"
+  authors:
+    - family-names: "Rodriguez"
+      given-names: "Demetri"
+  year: 2026
+  collection-title: "In preparation"
