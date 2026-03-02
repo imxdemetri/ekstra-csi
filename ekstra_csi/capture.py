@@ -11,12 +11,51 @@ log = logging.getLogger(__name__)
 
 
 def get_ifindex(iface: str = "phy0") -> int:
-    path = f"/sys/class/ieee80211/{iface}/index"
-    try:
-        with open(path) as f:
+    """Resolve a PHY or netdev name to its kernel interface index.
+
+    Accepts either a PHY name like 'phy0' or a netdev name like 'phy0-ap0'.
+    nl80211 vendor commands need the netdev ifindex, not the PHY index --
+    these are different numbers. /sys/class/ieee80211/phy0/index gives the
+    PHY index (wrong), /sys/class/net/phy0-ap0/ifindex gives the netdev
+    index (right). Got burned by this during initial deployment.
+    """
+    # Direct netdev name (e.g. phy0-ap0, wlan0)
+    netdev_path = f"/sys/class/net/{iface}/ifindex"
+    if os.path.exists(netdev_path):
+        with open(netdev_path) as f:
             return int(f.read().strip())
-    except FileNotFoundError:
-        raise RuntimeError(f"phy interface not found: {path}")
+
+    # PHY name (e.g. "phy1") -- OpenWrt names AP interfaces as {phy}-ap0
+    phy_dir = f"/sys/class/ieee80211/{iface}"
+    if not os.path.exists(phy_dir):
+        raise RuntimeError(f"interface not found: {iface} (tried {netdev_path} and {phy_dir})")
+
+    ap_name = f"{iface}-ap0"
+    ap_path = f"/sys/class/net/{ap_name}/ifindex"
+    if os.path.exists(ap_path):
+        with open(ap_path) as f:
+            idx = int(f.read().strip())
+        log.info("resolved %s -> %s (ifindex %d)", iface, ap_name, idx)
+        return idx
+
+    # Fallback: scan all net interfaces for one whose phy80211 matches
+    net_base = "/sys/class/net"
+    if os.path.isdir(net_base):
+        for netdev in sorted(os.listdir(net_base)):
+            phy_link = os.path.join(net_base, netdev, "phy80211")
+            if os.path.islink(phy_link):
+                phy_real = os.path.basename(os.readlink(phy_link))
+                if phy_real == iface:
+                    idx_path = os.path.join(net_base, netdev, "ifindex")
+                    with open(idx_path) as f:
+                        idx = int(f.read().strip())
+                    log.info("resolved %s -> %s (ifindex %d) via phy80211 link", iface, netdev, idx)
+                    return idx
+
+    raise RuntimeError(
+        f"could not resolve ifindex for {iface}. "
+        f"Try passing the netdev name directly (e.g. phy0-ap0, phy1-ap0)."
+    )
 
 
 class ChainGrouper:
